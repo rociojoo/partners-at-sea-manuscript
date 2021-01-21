@@ -159,7 +159,7 @@ A pelagic pair trawl is a gear defined by one trawl towed in midwater by two
 vessels to target pelagic fish. Thus, vessels of the pelagic pair trawler fleet
 remain close performing almost synchronous movements while operating the trawl.
 The distance between vessels during this operation varies between 50 m and 250
-m, depending on the rope length (which in turn depends on several factors such
+m, depending on the warp length (which in turn depends on several factors such
 as the fishing depth and technique) [@Prado1988]. The vessels do not need to
 move together throughout their whole fishing trips, especially when steaming,
 using single trawls or exploring the sea individually looking for shoals
