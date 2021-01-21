@@ -1,0 +1,5 @@
+,Cluster 1,,,Cluster 2,,,Cluster 3,,
+,Prox,$DI_{\theta}$,$DI_d$,Prox,$DI_{\theta}$,$DI_d$,Prox,$DI_{\theta}$,$DI_d$
+Prox,,0.48,0.36,,0.46,0.3,,0.35,0.1
+$DI_{\theta}$,0.48,,0.79,0.46,,0.34,0.35,,0.47
+$DI_d$,0.36,0.79,,0.3,0.34,,0.1,0.47,

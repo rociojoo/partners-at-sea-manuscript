@@ -1,0 +1,7 @@
+Metric,Range,Interpretation for joint movement
+"$Prox = \left(\displaystyle\sum_{t=1}^{T}\mathbbm{1}{\{d_t^{A,B} < \delta \} }\right)/T$","$$\quad [0,1]$$",From always distant (0) to
+,,always close (1)
+"$DI_d = \left(\displaystyle\sum_{t=1}^{T-1} \left[1 - \left(\frac{\mid d_{t,t+1}^{A}-d_{t,t+1}^{B}\mid}{d_{t,t+1}^{A}+d_{t,t+1}^{B}}\right)^\beta\right]\right)/(T-1)$","$$\quad [0,1]$$",From non-cohesive (0) to cohesive (1)
+,,movement in displacement
+$DI_\theta = \left(\displaystyle\sum_{t=1}^{T-1} \cos(\theta_{A_t} - \theta_{B_t})\right)/(T-1)$,"$$\quad [-1,1]$$",From opposite (-1) to cohesive (1)
+,,movement in azimuth

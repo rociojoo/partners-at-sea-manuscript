@@ -1,0 +1,31 @@
+,,Total,Cluster 1,Cluster 2,Cluster 3
+Pelagic,Vessels,59,56,57,58
+pair,,,(94.9%),(96.6%),(98.3%)
+trawlers,Dyads,6457,495,1681,4281
+"($\delta= 5km$,",,,(7.7%),(26.0%),(66.3%)
+$\Delta t=1h$),Duration,87,74,68,97
+Large,Vessels,266,38,254,261
+bottom,,,(14.3%),(95.5%),(98.1%)
+otter trawlers,Dyads,54478,312,16205,37961
+"($\delta= 5km$,",,,(0.6%),(29.8%),(69.7%)
+$\Delta t=1h$),Duration,65,60,47,73
+Small,Vessels,202,52,185,183
+bottom,,,(25.7%),(91.6%),(90.6%)
+otter trawlers,Dyads,17300,93,7051,10156
+"($\delta = 3km$,",,,(0.5%),(40.8%),(58.7%)
+$\Delta t = 1h$),Duration,12,12,12,12
+Mid(water,Vessels,70,4,56,65
+otter,,,(5.7%),(80.0%),(92.9%)
+trawlers,Dyads,844,3,409,432
+"($\delta= 3km$,",,,(0.4%),(48.5%),(51.2%)
+$\Delta t=1h$),Duration,12,11,12,12
+Anchovy,Vessels,757,327,756,756
+purse-,,,(43.2%),(99.9%),(99.9%)
+seiners,Dyads,572804,568,168284,403952
+"($\delta=3 km$,",,,(0.1%),(29.4%),(70.5%)
+$\Delta t= 10 min$),Duration,17,16,16,17
+Tuna,Vessels,15,0,15,15
+purse-,,,,(100.0%),(100.0%)
+seiners,Dyads,1523,0,39,1484
+"($\delta= 10km$,",,,,(2.6%),(97.4%)
+$\Delta t= 1h$),Duration,357,,224,362

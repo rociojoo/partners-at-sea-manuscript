@@ -1,0 +1,867 @@
+---
+title: "Identifying partners at sea from joint movement metrics of pelagic pair trawlers"
+author: 
+  - Rocío Joo:
+      institute: [IFREMER,UF,GFW]
+  - Nicolas Bez:
+      institute: MARBEC
+  - Marie-Pierre Etienne:
+      institute: Rennes
+  - Pablo Marin:
+      institute: IMARPE
+  - Nicolas Goascoz:
+      institute: IFREMER2
+  - Jérôme Roux:
+      institute: IFREMER
+  - Stéphanie Mahévas:
+      institute: IFREMER
+      
+institute:
+  - IFREMER: IFREMER, Ecologie et Modèles pour l'Halieutique, BP 21105, 44311 Nantes Cedex 03, France
+  - UF: Department of Wildlife Ecology and Conservation, Fort Lauderdale Research and Education Center, University of Florida, Fort Lauderdale, FL, USA
+  - GFW: Global Fishing Watch, Washington, DC 20036, USA
+  - MARBEC: MARBEC, Univ Montpellier, IRD, Ifremer, CNRS, Sète, France
+  - Rennes: Univ Rennes, Agrocampus Ouest, CNRS, IRMAR - UMR 6625, F-35000 Rennes, France
+  - IMARPE: Instituto del Mar del Perú (IMARPE), Chucuito, Callao, Peru
+  - IFREMER2: IFREMER, Laboratoire Ressources Halieutiques de Port en Bessin, BP 32, 14520 Port en Bessin, France
+  
+      
+date: ''
+output:
+  word_document:
+    df_print: paged
+    fig_caption: yes
+    reference_docx: doc-style.docx
+    pandoc_args:
+      - '--lua-filter=scholarly-metadata.lua'
+      - '--lua-filter=author-info-blocks.lua'
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+  tufte::tufte_html:
+    toc: yes
+    toc_depth: 2
+bibliography: references_total.bib
+csl: ices-journal-of-marine-science.csl
+---
+
+## Abstract
+
+Here we present an approach to identify partners at sea based on fishing track
+analysis, and describe this behaviour in six different fleets: 1) pelagic pair
+trawlers, 2) large bottom otter trawlers, 3) small bottom otter trawlers, 4)
+mid-water otter trawlers, all operating in the North-East Atlantic Ocean, 5)
+anchovy purse-seiners in the South-East Pacific Ocean, and 6) tuna purse-seiners
+in the Western Indian Ocean. This type of behaviour is known to exist within
+pelagic pair trawlers, since these vessels need to be in pairs for their fishing
+operations. However, in practice, some of them decide to move together
+throughout their whole fishing trips, and others for only a segment of their
+trips. To identify partners at sea, we used a heuristic approach based on
+joint-movement metrics computed from vessel monitoring system data and Gaussian
+mixture models. The models were fitted to joint-movement metrics of the pelagic
+pair trawlers, and subsequently used to identify partners at sea in other
+fleets. We found partners at sea in all of the fleets except for  the tuna
+purse-seiners. We then analysed the connections at the scale of vessels and
+identified exclusive partners. Exclusiveness was more common in pelagic pair
+trawlers and small bottom otter trawlers, with $82\%$ and $73\%$ of the vessels
+involved in partnerships having exclusive partners. This work shows that there
+are collective tactics at least at a pairwise level in diverse fisheries in the
+world.
+
+## Keywords
+
+collective behaviour; dyadic joint movement metrics; Gaussian mixture model;
+vessel monitoring system; fishing tactics.
+
+
+
+# Introduction
+
+Understanding fisher spatial behaviour contributes to the development of
+effective spatial management tools. The increasing availability of georeferenced
+data from sources like Automatic Identification System (AIS; @Robards2016) and
+Vessel Monitoring System (VMS; @Hinz2013) has enabled a proliferation of studies
+that characterise fisher spatial dynamics (e.g. @Bertrand2005; @Joo2014),
+propose movement models (e.g. @Vermard2010; @Walker2010; @Joo2013;
+@Gloaguen2015a), account for it in stock assessment models for fisheries
+management (e.g. @Vigier2018) and discuss management measures based on it (e.g.
+@Gerritsen2012; @Holmes2011). While individual movement of fishers has been
+extensively studied by means of trajectory data, the collective behaviour of
+fishermen has been rather neglected. Fishers are social individuals that may
+develop collaboration or competing strategies (e.g. @Horta2012; @Hancock1995).
+The characterisation of their collective behaviour could provide valuable inputs
+that would increase the realism of movement models and make management measures
+more effective [@Salas2004; @Rijnsdorp2011; @Gezelius2007].
+
+Collective behaviour can emerge at large or small group scales, and may be
+reflected in a variety of movement patterns. Here, we focused on a particular
+collective behaviour, which is dyadic or pairwise joint movement behaviour, and
+more specifically, aimed at identifying partners at sea, defined as two fishing
+vessels that move together at sea. An extensive review and comparison of metrics
+for assessing dyadic joint movement [@Joo2018] showed that the metrics varied in
+their sensitivity to three aspects of joint movement: proximity, coordination in
+direction and coordination in speed. Here, we defined partners at sea as showing
+coordinated and proximal joint movement. To account for all of these aspects, we
+chose one metric for each of the three dimensions of joint movement, from the
+ones recommended in @Joo2018, to characterise the dyadic movement of fishing
+vessels.
+
+Strong partnership at sea was expected to be found in pelagic pair trawlers:
+since they need to be in pairs at least during each fishing operation, they are
+likely to be paring throughout their entire fishing trips. For that reason, in
+this study, we aimed at defining the model parameters that would allow us to
+identify strong partnership at sea in pelagic pair trawlers in the North-East
+Atlantic Ocean through the analysis of their VMS data. After that, the goal was
+two-fold: assessing whether if the same patterns of partnership were present in
+other fleets; and, if present, assessing the level of exclusiveness in the
+partnership within each fleet.
+
+Dyads, or potential candidates for partners at sea, were defined as pairs of
+segments of VMS tracks at sea at the same time. For each dyad, three joint
+movement metrics were calculated. Then, we fitted a Gaussian mixture model (GMM)
+to distinguish three groups of dyads sharing the same types of behaviour. One of
+these components was expected to correspond to partners at sea patterns. After
+characterising at-sea partnership in this fleet, we used the fitted model to
+identify partners at sea in several other fisheries: bottom and mid-water otter
+trawlers in the North-East Atlantic Ocean, anchovy purse-seiners in the
+South-East Pacific Ocean, and tuna purse-seiners in the Western Indian Ocean. We
+showed that this type of behaviour is not exclusive to pelagic pair trawlers,
+and discuss possible implications of this behaviour in terms of fishing
+strategies. Perspectives opened by this work for further research in collective
+spatial behaviour are also discussed.
+
+
+# Materials and Methods
+
+## Fishing vessels trajectory data
+
+In this section, the VMS data and fishing trip characteristics of the analysed
+fleets are briefly described. These are: $1$) French pelagic pair trawlers, $2$)
+French large bottom otter trawlers, $3$) French small bottom otter trawlers,
+$4$) French mid-water otter trawlers, all operating in the North-East Atlantic
+Ocean,  $5$) French tuna purse-seiners in the Western Indian Ocean, and $6$)
+Peruvian anchovy purse-seiners in the South-East Pacific Ocean.
+
+For the French fleets, the use of VMS started to be legislated and mandatory in
+the European Union since 2000. In practice, records are transmitted at $\sim$ 1
+h intervals. In the North-East Atlantic Ocean, we analysed VMS data from fishing
+trips performed between 2012 and 2013 within the English Channel and the Celtic
+Sea, while in the Indian Ocean, we analysed fishing trips from 2011 to 2013. In
+Peru, industrial purse-seiners are also legally obliged to use VMS tracking
+devices since 2000, transmitting their positions at $\sim$ 1 h intervals, but
+since 2015, VMS positions are recorded each $10$ minutes. We focus on Peruvian
+fishing trips during a specific fishing season in 2016.
+
+### French pelagic pair trawlers
+
+A pelagic pair trawl is a gear defined by one trawl towed in midwater by two
+vessels to target pelagic fish. Thus, vessels of the pelagic pair trawler fleet
+remain close performing almost synchronous movements while operating the trawl.
+The distance between vessels during this operation varies between 50 m and 250
+m, depending on the rope length (which in turn depends on several factors such
+as the fishing depth and technique) [@Prado1988]. The vessels do not need to
+move together throughout their whole fishing trips, especially when steaming,
+using single trawls or exploring the sea individually looking for shoals
+[@Sainsbury1996]. These vessels can spend part of their fishing trips on
+individual activities, even targetting other fish that do not require pair
+trawling. Most of the pair-trawler fishing trips in the dataset were performed
+by relatively large vessels (18-24 m; $\sim 80\%$), and they last $\sim 99h$ on
+average, according to fisher logbooks.
+
+### French large and small bottom otter trawlers
+
+The bottom otter trawl gear is a trawl towed by a single vessel; these vessels
+target bottom and demersal species. Vessels performing bottom otter trawl
+fishing trips had a large variability in their sizes: from 10 to 40 m. The
+duration of the trips were proportionally related to the size of the vessels:
+larger vessels performed longer trips and generally offshore. Since, for this
+type of gear, the spatial behaviour from smaller vessels differs from that of
+larger vessels (e.g. the trips are not only shorter but also closer to the
+coast), we separated bottom otter trawlers into two groups: one with vessels
+smaller than 12 m or performing trips of less than 20 h (we assume that in very
+short trips even large vessels act like the small ones), and another one with
+vessels larger than 12 m or performing trips of larger duration; vessels with
+these characteristics are considered as composing the small otter trawl and
+large otter trawl fishing fleets, respectively. The average duration of fishing
+trips for both fleets were $\sim$ 16 and $\sim$ 105 hours, respectively,
+according to fisher logbooks.
+
+### French mid-water otter trawlers
+
+A mid-water otter trawl gear is also operated by an individual vessel. As the
+vessels in the pair trawler fleet, mid-water otter trawlers target pelagic fish
+mostly. As with bottom trawlers, vessels performing mid-water trawling trips had
+sizes ranging from 10 to 40 m; larger vessels exist (e.g. 90 m long targeting
+blue whiting) but were not found in this dataset. However, the spatial behaviour
+of these vessels was not conditioned by their size, so they were not separated
+by size. The average duration of a fishing trip was $\sim$ 31 hours (fisher
+logbooks). Since fishing with mid-water or bottom otter trawls does not require
+pair-work, if it exists, it would reflect a strategic/tactical choice.
+
+### French tuna purse-seiners
+
+The fleet is composed of ten to twenty vessels operating in the Indian Ocean and
+the size of the purse seiners is typically of sixty meters. Tuna purse-seiners'
+fishing trips usually last several tens of days. The time windows targeted in
+the present study (2011-2013) followed a harsh period of strong security issues
+induced by piracy attacks in the Indian Ocean. During the second half of 2009,
+it became mandatory for fishing vessels operating in the Indian Ocean to fish in
+pairs before some military protection were enforced. However, some vessels could
+have decided to continue moving more or less in pairs as a precautionary
+approach. Since tuna purse-seiners perform long fishing trips, we did not expect
+vessels to move together throughout their whole fishing trips, but rather over
+some shorter opportunist periods of time, eventually changing partners.
+
+### Peruvian anchovy purse-seiners
+
+The ten-minutes frequency of data recording is particularly suiting for
+monitoring the anchovy (*Engraulis ringens*) industrial fishery, where
+fishing trips usually last less than 24 hours (a median of $17$ hours for the
+analysed data), since fish tends to distribute close to the coast in dense
+patches [@Bertrand2008; @Joo2014]. In this fishery, vessel size is measured in
+terms of its hold capacity, which varies from $32.5$ MT to $900$ MT, with a
+median at $\sim 100$ MT. We used data from the first fishing season of 2016 (39
+days between June and July). Though the race for fish stopped in 2009 (the total
+allowable catch was replaced by an individual vessel quota system; @Aranda2009),
+the high abundance of anchovy, the eagerness to save fuel oil and the habit of
+performing very short fishing trips, make it common for vessels to go to the
+same fishing zones or to follow each other as a fishing tactic. Thus here as
+well, we expected to find some patterns of joint movement, although not
+perfectly synchronous or remaining close to each other all the time.
+
+	
+## Methods		
+		
+Identifying partners at sea basically consists of 1) data pre-processing and
+dyad constitution (i.e. the VMS data was first cleaned and interpolated, and
+then dyadic segments of trajectories were identified); 2) joint-movement metrics
+derivation for each dyad; 3) identification of clusters of dyadic joint movement
+--and particularly partners at sea-- via GMMs; and 4) characterisation of
+partnership at vessel and fleet scales. All the analyses were performed in R
+[@R2015].
+
+### Data Pre-processing
+
+From the trawler VMS data, fishing trips where at least one pair of consecutive
+records were lagged by more than three hours were removed ($\approx 9\%$ of the
+total number of fishing trips). For tuna purse-seiners, we used a one-hour
+threshold. If there were consecutive records separated for more than one hour,
+those differences had to represent less than $10\%$ of the trip duration to keep
+the trip in the dataset ($\approx 7\%$ of the total number of fishing trips were
+removed). Then, since location records had irregular time steps, we linearly
+interpolated tracks to obtain regular 1-hour time steps and simultaneous VMS
+positions (i.e. fixes) from vessels at sea. The anchovy purse-seine data was
+processed using the SISESATools R package
+[https://github.com/PabloMBooster/SISESATools](https://github.com/PabloMBooster/SISESATools)
+prior to this study. The SISESATools algorithms apply a two-hour threshold for
+consecutive records and use a linear interpolation at 10-minute time steps. From
+the (interpolated) fixes, we derived motion variables such as displacement
+(distance between consecutive fixes) and absolute angle (between the direction
+of the x-axis and the locations at consecutive fixes). The adehabitatLT package
+in R [@adehabitatLT] was used to compute those metrics.
+
+We then formed the dyads that would be candidates for partners at sea. Dyads
+were defined as the concomitant parts of two vessel tracks crossing each other
+at least once during their fishing trips. We considered that, to 'cross each
+other', vessels had to be at a proximity of <5 km at least once for all
+fleets, except tuna purse-seiners. The latter have a greater range of motion and
+do not get so close; for them, the distance threshold was set to 60 km. If both
+vessels departed from port and then arrived to port at the same time, the dyad
+was to be composed of the two tracks of their whole fishing trips; if not, the
+dyad would have been composed by track segments of their fishing trips
+corresponding to moments when both vessels were at sea. To keep only dyads with
+segments that were long enough for the analysis, an arbitrary 10-hour threshold
+was set for all trawlers and anchovy purse-seiner fleets. Tuna purse-seiners
+performed longer trips, so the 10th percentile, i.e. 106 hours, was used as
+their threshold. The number of vessels, dyads and the median duration of a dyad
+are shown in Table 1.
+
+```{r, echo=FALSE}
+library(flextable)
+table1 <- read.csv("Table1.csv")
+table1$X <- as.character(table1$X)
+
+table_1 <- flextable(
+  table1
+)
+table_1 <- set_header_labels(table_1, X = "",
+                             X.1 = "", Cluster.1 = "Cluster 1", 
+                             Cluster.2 = "Cluster 2", Cluster.3 = "Cluster 3")
+lines_delta <- c(4,9,14,19,24,29)
+table_1 <- mk_par(table_1, i = lines_delta, j = 1, value = as_paragraph("(δ = 5km"))
+lines_t <- lines_delta + 1
+table_1 <- mk_par(table_1, i = lines_t, j = 1, value = as_paragraph("Δt = 1h)"))
+
+library(officer)
+std_border = fp_border(color="black")
+lines_h <- c(5,10, 15, 20, 25)
+table_1 <- hline(table_1, i = lines_h, j = 1:6, border = std_border)
+table_1 <- vline(table_1, j = 2, border = std_border, part = "all")
+table_1 <- autofit(table_1, add_w = 0, add_h = 0)
+table_1 <- set_caption(table_1, caption = "Table 1. Statistics per fleet of number of vessels, number of dyads, their duration (median in hours), the δ threshold for Prox, and the frequency of record transmission. The first three statistics are also displayed for each cluster.")
+table_1
+```
+
+### Joint movement metrics
+
+The review made by @Joo2018 defined three dimensions of joint movement:
+proximity (closeness in space-time), coordination in direction and coordination
+in speed. The article evaluated ten metrics used in the literature to assess
+joint movement and showed that some metrics were either redundant or inaccurate
+for characterising joint movement, some others were better suited to assess
+proximity, and others were more sensitive to coordination. Based on that work,
+we chose three metrics that were positively evaluated and that -- together --
+account for the different aspects of joint movement: 1) the proximity index
+(proximity), 2) dynamic interaction in displacement (coordination in speed, and
+in displacement when time steps are regularly spaced), and 3) dynamic
+interaction in direction (coordination in direction).
+
+The proximity index (Prox) is defined as the proportion of simultaneous fixes
+that are spatially close. To define closeness, we needed to fix a distance
+threshold $\delta$. For pair trawlers, it is expected that at the very moment of
+fishing, vessels working together are separated by less than 1 km from each
+other. When they were not fishing, they could still move together but not
+necessarily at <1km. Thus, a $5$km threshold was used for this fleet.
+We also used a 5km threshold for large bottom otter trawlers to get comparable
+results to those of pair trawlers. Anchovy purse-seiners, mid-water, and small
+bottom otter trawlers usually perform short and coastal fishing trips, meaning
+that vessels would not necessarily move together as a strategy, but could
+sometimes coincide in places due to their short coastal movements. For that
+reason, we chose a smaller threshold, 3km, for those three fleets. For tuna
+purse-seiners, we chose 10km, as it is roughly the limit of visual detection of
+neighbouring vessels.
+
+The calculation of the other two metrics did not require an *ad hoc*
+parametrization as for Prox. The dynamic interaction in direction ($DI_\theta$)
+and in displacement ($DI_{d}$) measured similarity in direction and
+speed/displacement, respectively, between simultaneous fixes (i.e. records of
+locations) in a dyad. The mathematical definition of each metric is shown in
+Table 2.
+
+```{r, echo=FALSE}
+table2 <- read.csv("Table2.csv")
+# table1$X <- as.character(table1$X)
+
+table_2 <- flextable(
+  table2
+)
+table_2 <- set_header_labels(table_2, Interpretation.for.joint.movement = "Interpretation for joint movement")
+
+font_size <- 10
+
+table_2 <- mk_par(table_2, i = 1, j = 1, value = as_paragraph("Prox = (Σ", 
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "1{d",
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "(A,B) < δ})/T"
+)
+)
+
+table_2 <- mk_par(table_2, i = 3, j = 1, value = as_paragraph("DI", 
+  as_chunk(x = "d", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  " = (Σ",
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "[1 - (|d",
+  as_chunk(x = "t,t+1", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "(A) - d",
+  as_chunk(x = "t,t+1", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "(B)| / (d",
+  as_chunk(x = "t,t+1", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "(A) + d",
+  as_chunk(x = "t,t+1", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "(B)))",
+  as_chunk(x = "β", 
+    props = fp_text(vertical.align = "superscript", font.size = font_size)),
+  "]) / (T-1)"
+)
+)
+
+table_2 <- mk_par(table_2, i = 5, j = 1, value = as_paragraph("DI", 
+  as_chunk(x = "θ",  
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  " = (Σ",
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "cos(θ",
+  as_chunk(x = "A", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  "-θ",
+  as_chunk(x = "B", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  as_chunk(x = "t", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size)),
+  ")) / (T-1)"
+)
+)
+
+table_2 <- mk_par(table_2, i = c(1,3), j = 2, value = as_paragraph("[0,1]")) 
+
+table_2 <- mk_par(table_2, i = 5, j = 2, value = as_paragraph("[-1,1]")) 
+
+table_2 <- merge_at(table_2, i = 3:4, j = 1, part = "body")
+                                                              
+table_2 <- autofit(table_2, add_w = 0, add_h = 0)
+table_2 <- set_caption(table_2, caption = "Table 2. Joint movement metrics")
+table_2
+```
+*Note:*  $A$, $B$: vessels in the dyad; $T$: number of fixes in the dyad; $d_t(A,B)$: distance in km between vessels $A$ and $B$ at $t$-th fixes; $1{ \{\}}$: index function; 
+		$\delta$: distance threshold; 
+		$d_{t,t+1}(A)$ (resp. $d_{t,t+1}(B)$): displacement of $A$ (resp. $B$) in km between fixes $t$ and $t+1$; $\beta$ is a scaling parameter for which we assume to take the default value of 1 [@Long2013;@Joo2018];
+		$\theta_{A_t}$ (resp. $\theta_{B_t}$): heading of vessel $A$ (resp. $B$) at time $t$. 
+
+
+### Identification of partners at see with Gaussian mixture models
+
+Partner identification was addressed through a probabilistic clustering approach
+using GMMs [@biernacki2006model]. In this approach, each dyad $i$ was
+characterised by its three dimensional metrics $X_i=(Prox_i, {DI_d}_i, {DI_\theta}_i)$ 
+which were assumed to be a realisation of a three-dimensional
+normal distribution. The mean vector and the variance matrix of this
+distribution depended on the unknown cluster $Z_i$ to which the dyad $i$
+belonged. Given a fixed number of clusters $(G)$ and the three metrics, there
+were three elements to estimate for each cluster $g$ $(g=1,...,G)$: a
+three-dimensional mean $(\mu_g)$, a $3 \times 3$ covariance matrix $(\Sigma_g)$,
+and the proportion of the cluster in the observed dyad population $(\pi_g)$.
+
+In this set-up, the probability density function of given metric values $x_i$ of
+a dyad $i$ ($\phi(x_i)$) can be expressed as:
+
+$$\phi(x_i)=\sum_{g=1}^{G} \pi_g f_g(x_i,\mu_g,\Sigma_g)$$ where $\pi_g = P(Z_i = g)$ 
+and $ f_g(x_i,\mu_g,\Sigma_g)$ is a three-dimensional Gaussian density
+function.
+
+The probability of being in cluster $g$ for each dyad $i$ given the observed
+metrics, $P(Z_i = g \vert X_i = x_i)$, also called posterior probability, was
+obtained as a by-product of the global estimation of the model and is expressed
+as follows:
+
+$$P(Z_i=g \vert X_i=x_i) = \frac{ \pi_g
+f_g(x_i,\widehat{\mu}_g,\widehat{\Sigma}_g) }{\displaystyle \sum_{k=1}^{G}\pi_k
+f_g(x_i,\widehat{\mu}_k,\widehat{\Sigma}_k) }, $$ where $\widehat{\mu}_g$ and
+$\widehat{\Sigma}_g$ stand respectively for the estimated mean in cluster $g$
+and the corresponding estimated covariance matrix.
+
+In GMMs, the total number of clusters are chosen according to either statistical
+selection criteria (mostly likelihood-based) or case-study goals. A
+three-component GMM structure, i.e. $G=3$, was chosen in order to obtain higher
+discrepancies between two extreme dyadic-behaviour clusters by allowing to have
+a cluster in between corresponding to an intermediate behaviour. This pattern
+would be consistent with our expectations of joint movement within the pelagic
+pair trawler fleet: dyads moving together all along, some others joining each
+other at some moments--like fishing operations, and others moving independently
+from each other--likely paired with other vessels.
+
+Each covariance matrix $\Sigma_g$ can be expressed as the product of different
+components which specify its orientation, shape and volume (see
+@biernacki2006model). We chose a general GMM structure of 3 dyadic-behaviour
+clusters allowing for the volume, orientation and shape of the clusters to
+differ from one another, called Gaussian\_pk\_Lk\_Ck in @biernacki2006model.
+
+The GMMs were fitted to the pelagic pair trawlers dataset, composed of $6457$
+dyads. Parameter estimation was achieved via the iterative EM algorithm. Because
+EM is known to be sensitive to initial conditions [@dempster1977maximum], we
+fitted 30 different GMMs and kept the one that minimised the integrated complete
+likelihood criterion, using the Rmixmod package [@Rmixmod] and based on
+@biernacki2006model. From the fitted model, henceforth denoted by $GMM_{pair
+trawlers}$, we obtained the posterior probability $P(Z_i=g \mid X_i=x_i)$ of
+each dyad $i$ to belong to each cluster $g$ given the metric values $x_i$. We
+considered that a dyad was classified as part of the cluster $g$ that maximised
+the posterior probability $P(Z_i=g \mid X_i=x_i)$. The level of mixture between
+pairs of clusters in the final model was quantified as the overlapping volume
+between the tri-Gaussian distributions of each cluster. This index ranges
+between 0 (no mixture) and 1 full (mixing). High levels of mixture would
+indicate that the clusters are difficult to distinguish from each other, making
+the classification poorly relevant.
+
+For each cluster, we computed a global average of the Z-scores (i.e. centred and
+scaled transformation) of their $(Prox_i, {DI_d}_i, {DI_\theta}_i)$-features,
+and ordered them accordingly. Based on the definitions of the metrics
+[@Joo2018], the cluster with the highest average was associated to partners at
+sea behaviour.
+
+The GMM fitted on pelagic pair trawlers ($GMM_{pair trawlers}$) was then used on
+each of the other fleets to classify their dyads, into the three identified
+groups. For each dyad $i$ of the other fleets, we computed $P(Z_i=g \mid X_i=x_i)$ 
+for $g=\{1,2,3\}$ and assigned the dyad to the most plausible cluster.
+
+Using GMMs provided several advantages compared to other common clustering
+algorithms. Since it is a model-based clustering approach, we obtained posterior
+probabilities of belonging to each cluster; it is thus a probabilistic
+classification instead of a hard classification. The k-means algorithm can
+actually be seen as a particular case of a GMM: the former optimizes a loss
+function which could be seen as the negative log likelihood of a GMM with
+spherical shape and same variance among clusters [@Bishop2006].
+The GMM fitted to the pair trawler data allowed for different variances and was
+not constrained to spherical structures, thus being more flexible than k-means.
+Moreover, the EM algorithm used to estimate the parameters in the GMM runs a
+k-mean algorithm to find a suitable starting point.
+
+### Vessel and fleet characterisation
+
+We focused on the first group of each fleet, i.e. partners at sea. Their
+relative importance in the fleets were represented by the proportions of vessels
+and dyads involved in the cluster. For each fleet, the social relationships
+between vessels that engaged at least once in partners at sea behaviour were
+visually represented as a social network [@Scott1988; @Jacoby2016]. The elements
+of the sociomatrix of the network, i.e. adjacency matrix, represented the number
+of partner-at-sea dyads between the vessels ---that had at least one dyad in the
+cluster. The Fruchterman and Reingold algorithm was chosen to draw the graph. It
+positions the nodes of the graph in the space so that all edges are more or less
+equal length and there are as few crossing edges as possible, aiming at an
+aesthetic representation [@Fruchterman1991]. The igraph package was used for
+this purpose [@igraph2006R].
+
+We identified which and how many vessels were exclusive, i.e. only formed
+partners at sea with one vessel throughout the whole period of study. In the
+adjacency matrix this corresponded to the rows with 0 everywhere except once. To
+assess how exclusive were partnerships at the fleet level, a loyalty index was
+defined as the proportion of vessels that showed exclusiveness in partnership.
+For this calculation we excluded vessels with only one dyad in the group.
+
+All the R codes for partner-at-sea identification via GMMs and vessel and fleet
+characterisation are available at
+[https://rociojoo.github.io/partners-at-sea](https://rociojoo.github.io/partners-at-sea)
+(doi:10.5281/zenodo.4016377)
+
+
+# Results
+
+## Pelagic pair trawlers
+
+```{r, echo=FALSE}
+
+table3 <- read.csv("Table3.csv")
+
+table_3 <- flextable(
+  table3
+)
+table_3 <- set_header_labels(table_3, X = "",
+                             X.1 = "", Cluster.1 = "Cluster 1", 
+                             Cluster.2 = "Cluster 2", Cluster.3 = "Cluster 3")
+
+table_3 <- mk_par(table_3, i = 1, j = 1, value = as_paragraph("π"))
+table_3 <- mk_par(table_3, i = 2, j = 1, value = as_paragraph("μ"))
+table_3 <- mk_par(table_3, i = 5, j = 1, value = as_paragraph("Σ",
+            as_chunk(x = "ii", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+
+table_3 <- mk_par(table_3, i = c(3,6), j = 2, value = as_paragraph("DI",
+            as_chunk(x = "θ", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+table_3 <- mk_par(table_3, i = c(4,7), j = 2, value = as_paragraph("DI",
+            as_chunk(x = "d", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+
+
+table_3 <- autofit(table_3, add_w = 0, add_h = 0)
+table_3 <- set_caption(table_3, caption = "Table 3. Parameter estimates of GMM for pair trawlers")
+table_3
+```
+
+```{r, echo=FALSE, warning=FALSE}
+
+table4 <- read.csv("Table4.csv")
+
+table_4 <- flextable(
+  table4
+)
+table_4 <- set_header_labels(table_4, X = "",
+                             Cluster.1 = "Cluster 1", X.1 = "Cluster 1", X.2 = "Cluster 1",
+                             Cluster.2 = "Cluster 2", X.3 = "Cluster 2", X.4 = "Cluster 2",
+                             Cluster.3 = "Cluster 3", X.5 = "Cluster 3", X.6 = "Cluster 3")
+
+table_4 <- merge_h(table_4, part = "header")
+
+table_4 <- mk_par(table_4, i = 1, j = c(3,6,9), value = as_paragraph("DI",
+            as_chunk(x = "θ", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+table_4 <- mk_par(table_4, i = 3, j = 1, value = as_paragraph("DI",
+            as_chunk(x = "θ", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+
+table_4 <- mk_par(table_4, i = 1, j = c(4,7,10), value = as_paragraph("DI",
+            as_chunk(x = "d", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+table_4 <- mk_par(table_4, i = 4, j = 1, value = as_paragraph("DI",
+            as_chunk(x = "d", 
+    props = fp_text(vertical.align = "subscript", font.size = font_size))                                                  ))
+
+
+table_4 <- autofit(table_4, add_w = 0, add_h = 0)
+table_4 <- set_caption(table_4, caption = "Table 4. Correlations between metrics per cluster obtained from Σ estimates of the GMM for pair trawlers")
+table_4
+```
+
+After pre-processing, $6457$ dyads were classified with GMMs. The estimated
+parameters are shown in Table 3. The correlations between features (Table 4)
+were not negligible, which supports the joint use of metrics that evaluate
+different aspects of dyadic movement. There was little overlap between cluster 1
+and the other two: $1.9 \times 10^{-3}$ and $3.7 \times 10^{-10}$, between
+clusters 1 and 2, and 1 and 3, respectively. There was higher overlap ($0.32$)
+between clusters 2 and 3. Moreover, most dyads were classified based on high
+values of their posteriors ($1.00$, $0.95$, and $0.86$ as median posteriors for
+each group, respectively; Fig. 3), and all of them above $0.5$.
+
+The three clusters obtained corresponded to distinct levels of joint movement
+(Fig. 1). The first one (purple in Fig. 1) corresponded to high joint movement
+in its three dimensions: proximity, coordination in direction and in
+speed/displacement. This was the expected pattern for partnership at sea. The
+second one (green in Fig. 1) was associated to a lower degree of joint movement
+in all dimensions. The third cluster (yellow in Fig. 1) was overall
+characterised by low proximity, relatively low coordination in direction, and
+low coordination in displacement. In these two metrics, there was a considerable
+amount of overlap, with Prox being the metric that made these two groups
+distinguishable. The tracks of the most representative dyad of each cluster,
+i.e. the one with the largest $P(Z=g \mid X=x)$, are shown in Fig. 2. Animations
+of the trajectories and time series related to the three metrics can be found in
+<https://rociojoo.github.io/partners-at-sea/>.
+
+In total, $8\%$, $26\%$ and $66\%$ of the examined dyads were classified in the
+first, second and third cluster, respectively (Table 1). The examined dyads were
+couples of vessel tracks coinciding in a common area at the same time. Not all
+pairs of vessels that cross their paths should be necessarily working together.
+On the other hand, most of the vessels of the fleet, $56$ ($95\%$), participated
+at least once in dyads classified as partners at sea. From them, $46$ had
+exclusive partners (Fig. 5), which translated into a $0.82$ loyalty index for
+the fleet.
+
+## Dyads from other fleets
+
+In this section, we focused only on the first group, i.e. partners at sea. The
+proportion of dyads classified in each cluster is presented in Table 1, and
+examples of dyads in each cluster for all fleets can be found in
+<https://rociojoo.github.io/partners-at-sea/>, a companion website for the
+manuscript.
+
+When using $GMM_{pair trawlers}$ to classify dyads from the other fleets, we
+found partners at sea in all of them except for tuna purse seiners. In all the
+fleets, the posterior probabilities computed for classification were relatively
+high (medians were $>0.65$ and all posteriors were $>0.5$; Fig. 3) showing low
+ambiguity for classification in all groups.
+
+For large, small bottom, mid-water otter trawlers and anchovy purse-seiners,
+$312$, $93$, $3$ and $568$ dyads were classified as partners at sea,
+respectively (Table 1). In all cases, it represented less than $1\%$ of the
+examined dyads, showing that vessels in the same area do not always move
+together, and when they do, they do not do it in large groups.
+
+We compared the distribution of values of the metrics in the first group between
+pelagic pair trawlers and the other fleets (large and small bottom otter
+trawlers, and anchovy purse-seiners; Fig. 4). Large bottom otter trawlers showed
+the most similar shapes of the distributions to pair trawlers, for all metrics,
+though the values of $DI_{d}$ were less skewed to the right than for pair
+trawlers. This difference in skewness for $DI_{d}$ was also true for the other
+two fleets. Moreover, 'partners at sea' among anchovy purse-seiners took lower
+values of all the metrics (more skewed to the left). Since both fleets target
+pelagic species, one might have expected to find similar metric values for their
+partners at sea. This difference could be related to the different sampling rate
+(10 minutes), which allows looking at a finer scale in joint movement, showing
+that at this scale it is rather low. It could also be an indicator of a joint
+movement that does not occur at a dyadic scale, i.e. a couple of vessels that
+decide to move together; if larger groups were moving together, this pattern
+would not have necessarily reflected in very high values in the dyadic movement
+metrics.
+
+The percentage of vessels engaged in at-sea partnership and their exclusiveness
+varied greatly among fleets (Fig. 5). $38$ out of $266$ large bottom otter
+trawlers ($14\%$) showed at-sea partnership at least once, and from them, $19$
+had exclusive partners (loyalty = $0.54$). A larger percentage of small bottom
+otter trawlers engaged in partnership ($26\%$, or $52$ out of $202$). From them,
+$38$ had exclusive partners ($35$ with $>1$ dyad; loyalty = $0.74$). Only $4$
+out of $70$ mid-water otter trawlers engaged in partnership, which was exclusive
+(loyalty = $1$) and only occurred three times. In contrast, $43\%$ of the
+anchovy purse-seiners engaged in partnership (or $327$ out of $757$ vessels).
+$134$ of these vessels were exclusive ($132$ with $>1$ dyad; loyalty = $0.44$).
+Most anchovy purse-seiners showed joint-movement links with large groups of
+vessels (Fig. 5d), which would be consistent with the differences in the metrics
+distribution (Fig. 4).
+
+
+# Discussion
+
+In this work, we aimed at identifying partners at sea in different fleets around
+the world. We presented a simple heuristic approach to identify them by means of
+joint movement metrics [@Joo2018], use of Gaussian mixture modelling, and taking
+pelagic pair trawlers as a 'training' dataset.
+
+Partners at sea were identified in all the examined fisheries, except for tuna
+purse-seiners. This could be partly explained by the long duration of their
+fishing trips and large range of movement. While the trip duration in the other
+fleets ranged between less than a day and four days, tuna purse-seiner fishing
+trips lasted about 30 or 40 days. Tuna purse-seiners, not bounded to fish
+together, showed that there was no strategy involving dyadic joint movement
+throughout their whole trips. However, data exploration showed that some vessels
+moved together in pairs for parts of their trips (see
+<https://rociojoo.github.io/partners-at-sea/> for an example in group 2). The
+identification of trip segments associated to joint movement (i.e. redefining a
+dyad) was out of the scope of this work, and remains open for future research.
+
+Mid-water and small bottom otter trawlers performed equally in terms of trip
+duration and distances covered. However, the mid-water otter trawler dataset
+only contained three partners at sea dyads, suggesting that individual
+competition could be higher in this fleet, or that working together would bring
+them no benefit, which could be due to their smaller fishing zones or the
+spatial behaviour of their targeted fish. Compared to mid-water trawlers, a
+higher percentage of both small and large bottom otter trawlers participated in
+partnerships, showing that this is a strategy used in these fleets, though it
+has not been adopted by the majority of the vessels. These three trawler fleets
+are composed of vessels that engage in fishing activities (métiers) that target
+demersal or benthic species (fish, crustaceans, cephalopods). From empirical
+observations, these métiers are likely to require less synchronous collaboration
+than pelagic métiers. Instead, the observed partner-at-sea behaviours could have
+been shaped by environmental or physical constraints (e.g. currents,
+@Gloaguen2016) that the vessels would be facing in the same fishing area at the
+same time, rather than a collaborative fishing strategy.
+
+A third of anchovy purse-seiners moved in partnership at least once during the
+analysed fishing season. Though the trips had a short duration ($\sim 17$
+hours), the sampling rate from these VMS data was very high ($\sim 10$ minutes).
+At such resolution, joint movement patterns were identified. In this intensive
+and highly dynamic monospecific fishery, these findings are somehow a surprise
+that may be worth studying in more detail in the future. The high number of
+vessels in this fleet showing joint movement, and the high number of connections
+displayed in its social network, makes it appealing to study joint movement in
+larger groups for this fleet.
+
+While it was expected to find partnership in pelagic pair trawlers, the degree
+of loyalty in this fleet was previously unknown, thus revealing about their
+partnership strategies. $82\%$ of the vessels (or fishers) opted for exclusive
+partnerships, and the ones who did not, exchanged partners in very reduced
+groups. In large and small bottom otter trawlers, the loyalty between vessels
+involved in the partner at sea cluster was lower; small bottom otter trawlers
+are involved in larger groups (Fig. 5). Non-exclusive partnerships involved even
+larger groups in the anchovy purse-seine fleet. These fleets may be revealing
+two opposed partnership strategies: exclusiveness, which would involve
+commitment or long-term partnership, and opportunism, in which a vessel would
+move jointly with another one (or even a group of vessels) without any previous
+history or commitment. We did not assess the associations between partnerships
+and belonging to a same company, and it could be appealing for future studies to
+analyse if this would correspond to a strategy where the ship-owner requires his
+fishing masters to work together.
+
+This work represents a first approach into studying joint movement behaviour and
+strategies in fisheries. It highlights the fact that not all trajectories can be
+considered as independent, an assumption made in most modelling studies (e.g.
+using state space models; @Joo2013; @Gloaguen2015a). Furthermore, it could be
+appealing to apply this approach to select, from a set of trajectories, those
+that do not show any partnership at sea. This could allow computing Catch per
+Unit of Effort only drawn from independent fishing operations. It could also be
+used to evaluate potential errors in modelling fleet dynamics. For instance, one
+could fit state-space models using independent tracks on one hand and using all
+the tracks on the other, and compare the goodness of fit of both models --and
+simulation results --to evaluate the biases in state estimations linked to the
+dependence between vessels.
+
+In this study, we focused on a very specific scale of joint movement, the dyad,
+defined as a unit composed of fishing trip segments of two vessels occurring at
+the same time and in a common area. Studying the strategies of fleets like the
+tuna purse-seiners could benefit from the development of methods to identify
+joint movement at smaller scales (e.g. segments of fishing trips). The
+computation of Prox for each dyad depended on a fixed distance threshold. Here,
+we made an ad hoc choice of the threshold for each fleet. This choice is not
+straightforward; more in-depth studies of dyadic movement should focus on
+sensitivity analysis and the development of an automatic choice of the
+threshold.
+
+We consider this work as a first approach to studying partnership at sea, with
+pelagic pair trawlers' joint movement as a starting point. Future studies could
+focus on other types of partnership at sea, pairwise or not. In many fisheries,
+like the anchovy purse-seine fishery, the characterisation of joint movement in
+larger groups could help understanding the scales of collective behaviour in the
+fisheries. Besides joint movement, leader/following dynamics would also be worth
+exploring (see a brief discussion in @Joo2018). All of these components would
+help characterising spatial behaviour patterns, but it would not be enough to
+understand the triggers of these behaviours. A next step would be to understand
+the associations between joint movement (or following movement) and external
+factors such as the spatial aggregation of the targeted species, the direction
+of currents, or management and economic policies. Ultimately, understanding and
+modelling fisher movement including its collective components will contribute to
+better estimations of local exploitation of resources. More realistic movement
+models would allow better simulations of fisher spatial behaviour and effort for
+different management scenarios, thus improving decisions for management.
+
+
+# Acknowledgements
+
+The authors would like to thank Youen Vermard and Fabien Forget for useful
+feedback on the French fleets operating in the North-East Atlantic Ocean and the
+Indian Ocean, respectively. Youen's feedback on data processing was of great
+help, as well. We also acknowledge the collaboration of Ob7 – Observatoire des
+Ecosystèmes Pélagiques Tropicaux exploités, for the tuna dataset. The tuna data
+used in this study were collected through the Data Collection Framework (Reg
+2017/1004 and 2016/1251) funded by both IRD and the European Union. We are also
+grateful to Emily Walker for codes related to the tuna purse-seine fishery.
+Guidance for use of servers and different computers from Olivier Berthele and
+Audric Vigier were key in the first stages of this work, when Rocío Joo's work
+computer was a mess. Thanks to both of you.
+
+# Authors' contributions
+
+RJ, SM and NB conceived the study. NG gave valuable insights on fishing
+behaviour at sea that were key to the study design and interpretation of
+results. RJ led the data processing and analysis, with contributions from PM and
+JR. MPE suggested and helped implementing the GMM. RJ led the writing of the
+manuscript. SM, NB and MPE made major contributions to the manuscript, and NG
+and PM made minor contributions to it.
+
+# Data and codes availability statement
+
+The dyads' metrics along with all of the R codes for GMM and computation of the
+fleet characteristics are available on Zenodo:
+<https://doi.org/10.5281/zenodo.4016377>. The codes can also be viewed from
+<https://rociojoo.github.io/partners-at-sea/data-processing-and-analysis.html>.
+Due to confidentiality agreements, the raw VMS data cannot be shared.
+
+
+# Figure captions
+
+Fig. 1. Histograms of the joint movement metrics for the three clusters (in
+purple, green and yellow) for pelagic pair trawlers. It should be noted that
+only $DI_\theta$ ranges from -1 to 1, while Prox and $DI_d$ take values from 0
+to 1.
+
+Fig. 2. The most representative dyadic example of each cluster for the pelagic
+pair trawler fleet, with the values of the metrics. The coordinates were
+transformed to avoid disclosing information about the vessels, whose identifiers
+are not shown either. a: Dyad from cluster 1. $Prox=1$; $DI_\theta = 1$; $DI_d =
+0.98$. b: Dyad from cluster 2. $Prox=0.57$; $DI_\theta = 0$; $DI_d = 0.69$. c:
+Dyad from cluster 3. $Prox=0.06$; $DI_\theta = -0.07$; $DI_d = 0.24$
+
+Fig. 3. Boxplots of the posterior probabilities $P(Z_i = g| X_i = x_i)$ of each
+dyad $i$ classified in each group. a: Pelagic pair trawlers. b: Large bottom
+otter trawlers. c: Small bottom otter trawlers. d: Mid-water otter trawlers. e:
+Tuna purse-seiners. f: Anchovy purse-seiners.
+
+Fig. 4. Histograms of the joint movement metrics ($Prox$, $DI_{\theta}$, and
+$DI_d$, in the left, centre and right columns, respectively) for the first group
+or partners at sea, comparing the pelagic pair trawlers (blue) with each of the
+other fleets (mustard). The other fleets are, in row order from top to bottom:
+large bottom otter trawlers, small bottom otter trawlers and anchovy
+purse-seiners. Tuna purse-seiners and mid-water otter trawlers  are not shown as
+no dyad and only three dyads, respectively, were associated with partnership. 
+<!-- a: -->
+<!-- Large bottom otter trawlers - Prox. b: Large bottom otter trawlers - -->
+<!-- $DI_{\theta}$. c: Large bottom otter trawlers - $DI_d$. d: Small bottom otter -->
+<!-- trawlers - Prox. e: Small bottom otter trawlers - $DI_{\theta}$. f: Small bottom -->
+<!-- otter trawlers - $DI_d$. g: Anchovy purse-seiners - Prox. h: Anchovy -->
+<!-- purse-seiners $DI_{\theta}$. i: Anchovy purse-seiners - $DI_d$. -->
+
+Fig. 5. Network representation of partnership for the pelagic pair trawlers (a),
+small bottom otter trawlers (b), large bottom otter trawlers (c) and anchovy
+purse-seiners (d). Tuna purse-seiners and mid-water otter trawlers are not shown
+as no dyad and only three dyads, respectively, were associated with partnership.
+Within each network, only vessels that engaged in partnership at sea at least
+once were represented. The size of the nodes (vessels) are proportional to the
+number of times they were involved in partnership. The thickness of the lines
+between nodes are proportional to the number of partnerships between both nodes.
