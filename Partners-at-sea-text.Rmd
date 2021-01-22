@@ -113,7 +113,7 @@ likely to be paring throughout their entire fishing trips. For that reason, in
 this study, we aimed at defining the model parameters that would allow us to
 identify strong partnership at sea in pelagic pair trawlers in the North-East
 Atlantic Ocean through the analysis of their VMS data. After that, the goal was
-two-fold: assessing whether if the same patterns of partnership were present in
+two-fold: assessing whether the same patterns of partnership were present in
 other fleets; and, if present, assessing the level of exclusiveness in the
 partnership within each fleet.
 
@@ -252,9 +252,8 @@ the trip in the dataset ($\approx 7\%$ of the total number of fishing trips were
 removed). Then, since location records had irregular time steps, we linearly
 interpolated tracks to obtain regular 1-hour time steps and simultaneous VMS
 positions (i.e. fixes) from vessels at sea. The anchovy purse-seine data was
-processed using the SISESATools R package
-[https://github.com/PabloMBooster/SISESATools](https://github.com/PabloMBooster/SISESATools)
-prior to this study. The SISESATools algorithms apply a two-hour threshold for
+processed using the vmsR R package [@RvmsR]
+prior to this study. The vmsR algorithms apply a two-hour threshold for
 consecutive records and use a linear interpolation at 10-minute time steps. From
 the (interpolated) fixes, we derived motion variables such as displacement
 (distance between consecutive fixes) and absolute angle (between the direction
@@ -509,18 +508,18 @@ k-mean algorithm to find a suitable starting point.
 
 ### Vessel and fleet characterisation
 
-We focused on the first group of each fleet, i.e. partners at sea. Their
-relative importance in the fleets were represented by the proportions of vessels
-and dyads involved in the cluster. For each fleet, the social relationships
-between vessels that engaged at least once in partners at sea behaviour were
-visually represented as a social network [@Scott1988; @Jacoby2016]. The elements
-of the sociomatrix of the network, i.e. adjacency matrix, represented the number
-of partner-at-sea dyads between the vessels ---that had at least one dyad in the
-cluster. The Fruchterman and Reingold algorithm was chosen to draw the graph. It
-positions the nodes of the graph in the space so that all edges are more or less
-equal length and there are as few crossing edges as possible, aiming at an
-aesthetic representation [@Fruchterman1991]. The igraph package was used for
-this purpose [@igraph2006R].
+We focused on the dyads of each fleet classified as cluster one, i.e. partners
+at sea. Their relative importance in the fleets were represented by the
+proportions of vessels and dyads involved in the cluster. For each fleet, the
+social relationships between vessels that engaged at least once in partners at
+sea behaviour were visually represented as a social network [@Scott1988;
+@Jacoby2016]. The elements of the sociomatrix of the network, i.e. adjacency
+matrix, represented the number of partner-at-sea dyads between the vessels
+---that had at least one dyad in the cluster. The Fruchterman and Reingold
+algorithm was chosen to draw the graph. It positions the nodes of the graph in
+the space so that all edges are more or less equal length and there are as few
+crossing edges as possible, aiming at an aesthetic representation
+[@Fruchterman1991]. The igraph package was used for this purpose [@igraph2006R].
 
 We identified which and how many vessels were exclusive, i.e. only formed
 partners at sea with one vessel throughout the whole period of study. In the
@@ -647,7 +646,7 @@ manuscript.
 When using $GMM_{pair trawlers}$ to classify dyads from the other fleets, we
 found partners at sea in all of them except for tuna purse seiners. In all the
 fleets, the posterior probabilities computed for classification were relatively
-high (medians were $>0.65$ and all posteriors were $>0.5$; Fig. 3) showing low
+high (medians were >0.65 and all posteriors were >0.5; Fig. 3) showing low
 ambiguity for classification in all groups.
 
 For large, small bottom, mid-water otter trawlers and anchovy purse-seiners,
@@ -665,24 +664,23 @@ trawlers. This difference in skewness for $DI_{d}$ was also true for the other
 two fleets. Moreover, 'partners at sea' among anchovy purse-seiners took lower
 values of all the metrics (more skewed to the left). Since both fleets target
 pelagic species, one might have expected to find similar metric values for their
-partners at sea. This difference could be related to the different sampling rate
-(10 minutes), which allows looking at a finer scale in joint movement, showing
-that at this scale it is rather low. It could also be an indicator of a joint
-movement that does not occur at a dyadic scale, i.e. a couple of vessels that
-decide to move together; if larger groups were moving together, this pattern
-would not have necessarily reflected in very high values in the dyadic movement
-metrics.
+partners at sea. This difference is not related to the different sampling rate
+(10 minutes), which we confirmed by re-running the analyses for 60 minute
+interpolated dyads. It could rather be an indication of a joint movement that
+does not occur at a dyadic scale, i.e. a couple of vessels that decide to move
+together; if larger groups were moving together, this pattern would not have
+necessarily reflected in very high values in the dyadic movement metrics.
 
 The percentage of vessels engaged in at-sea partnership and their exclusiveness
 varied greatly among fleets (Fig. 5). $38$ out of $266$ large bottom otter
 trawlers ($14\%$) showed at-sea partnership at least once, and from them, $19$
 had exclusive partners (loyalty = $0.54$). A larger percentage of small bottom
 otter trawlers engaged in partnership ($26\%$, or $52$ out of $202$). From them,
-$38$ had exclusive partners ($35$ with $>1$ dyad; loyalty = $0.74$). Only $4$
+$38$ had exclusive partners ($35$ with >1 dyad; loyalty = $0.74$). Only $4$
 out of $70$ mid-water otter trawlers engaged in partnership, which was exclusive
 (loyalty = $1$) and only occurred three times. In contrast, $43\%$ of the
 anchovy purse-seiners engaged in partnership (or $327$ out of $757$ vessels).
-$134$ of these vessels were exclusive ($132$ with $>1$ dyad; loyalty = $0.44$).
+$134$ of these vessels were exclusive ($132$ with >1 dyad; loyalty = $0.44$).
 Most anchovy purse-seiners showed joint-movement links with large groups of
 vessels (Fig. 5d), which would be consistent with the differences in the metrics
 distribution (Fig. 4).
