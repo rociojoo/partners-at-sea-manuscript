@@ -500,11 +500,12 @@ probabilities of belonging to each cluster; it is thus a probabilistic
 classification instead of a hard classification. The k-means algorithm can
 actually be seen as a particular case of a GMM: the former optimizes a loss
 function which could be seen as the negative log likelihood of a GMM with
-spherical shape and same variance among clusters [@Bishop2006].
+spherical shape and same variance among clusters [@Steinley2006].
 The GMM fitted to the pair trawler data allowed for different variances and was
-not constrained to spherical structures, thus being more flexible than k-means.
+not constrained to spherical structures, thus being more flexible than k-means,
+which should give a better classification performance [@Qiu2010].
 Moreover, the EM algorithm used to estimate the parameters in the GMM runs a
-k-mean algorithm to find a suitable starting point.
+k-mean algorithm to find a suitable starting point [@Bishop2006].
 
 ### Vessel and fleet characterisation
 
