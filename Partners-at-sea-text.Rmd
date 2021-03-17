@@ -437,15 +437,15 @@ In this set-up, the probability density function of given metric values $x_i$ of
 a dyad $i$ ($\phi(x_i)$) can be expressed as:
 
 $$\phi(x_i)=\sum_{g=1}^{G} \pi_g f_g(x_i,\mu_g,\Sigma_g)$$ where $\pi_g = P(Z_i = g)$ 
-and $ f_g(x_i,\mu_g,\Sigma_g)$ is a three-dimensional Gaussian density
+and $f_g(x_i,\mu_g,\Sigma_g)$ is a three-dimensional Gaussian density
 function.
 
 The probability of being in cluster $g$ for each dyad $i$ given the observed
-metrics, $P(Z_i = g \vert X_i = x_i)$, also called posterior probability, was
+metrics, $P(Z_i = g \mid X_i = x_i)$, also called posterior probability, was
 obtained as a by-product of the global estimation of the model and is expressed
 as follows:
 
-$$P(Z_i=g \vert X_i=x_i) = \frac{ \pi_g
+$$P(Z_i=g \mid X_i=x_i) = \frac{ \pi_g
 f_g(x_i,\widehat{\mu}_g,\widehat{\Sigma}_g) }{\displaystyle \sum_{k=1}^{G}\pi_k
 f_g(x_i,\widehat{\mu}_k,\widehat{\Sigma}_k) }, $$ where $\widehat{\mu}_g$ and
 $\widehat{\Sigma}_g$ stand respectively for the estimated mean in cluster $g$
@@ -822,6 +822,9 @@ fleet characteristics are available on Zenodo:
 <https://rociojoo.github.io/partners-at-sea/data-processing-and-analysis.html>.
 Due to confidentiality agreements, the raw VMS data cannot be shared.
 
+# References
+
+<div id="refs"></div>
 
 # Figure captions
 
@@ -837,7 +840,7 @@ are not shown either. a: Dyad from cluster 1. $Prox=1$; $DI_\theta = 1$; $DI_d =
 0.98$. b: Dyad from cluster 2. $Prox=0.57$; $DI_\theta = 0$; $DI_d = 0.69$. c:
 Dyad from cluster 3. $Prox=0.06$; $DI_\theta = -0.07$; $DI_d = 0.24$
 
-Fig. 3. Boxplots of the posterior probabilities $P(Z_i = g| X_i = x_i)$ of each
+Fig. 3. Boxplots of the posterior probabilities $P(Z_i = g \mid X_i = x_i)$ of each
 dyad $i$ classified in each group. a: Pelagic pair trawlers. b: Large bottom
 otter trawlers. c: Small bottom otter trawlers. d: Mid-water otter trawlers. e:
 Tuna purse-seiners. f: Anchovy purse-seiners.
